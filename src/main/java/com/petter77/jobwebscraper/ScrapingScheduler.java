@@ -6,6 +6,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.Jsoup;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import org.springframework.dao.DataIntegrityViolationException;
+
 
 @Component
 public class ScrapingScheduler {
@@ -17,7 +19,7 @@ public class ScrapingScheduler {
         this.offerRepository = offerRepository;
     }
 
-    @Scheduled(fixedRate = 1, timeUnit = TimeUnit.HOURS)
+    @Scheduled(fixedRate = 30, timeUnit = TimeUnit.MINUTES)
     public void scrape() {
         try{
             Document doc = Jsoup.connect("https://it.pracuj.pl/praca?et=17%2C1&sc=0&itth=38%2C54%2C41%2C37%2C36%2C34").get();
@@ -26,10 +28,16 @@ public class ScrapingScheduler {
 
             List<Offer> result = offerParser.parseAll(offers); 
 
-            offerRepository.saveAll(result);
+            for (Offer offer : result) {
+                try {
+                    offerRepository.save(offer);
+                } catch (DataIntegrityViolationException e) {
+                    System.out.println(e);
+                }
+            }
         }
         catch (Exception e) {
-
+            System.out.println("Scraping failed: " + e.getMessage());
         }
     }
 }
