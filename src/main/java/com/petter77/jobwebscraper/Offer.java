@@ -1,14 +1,24 @@
 package com.petter77.jobwebscraper;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 
+
+@Entity
 public class Offer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String title;
     private String published;
     private String technologies;
     private String url;
 
-    Offer(){};
+    public Offer(){};
 
-    Offer(String title, String technologies, String published, String url) {
+    public Offer(String title, String technologies, String published, String url) {
         this.title = title;
         this.technologies = technologies;
         this.published = published;

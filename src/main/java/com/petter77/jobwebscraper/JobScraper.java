@@ -12,9 +12,13 @@ public class JobScraper implements CommandLineRunner {
 
     private final OfferParser offerParser; 
 
-    public JobScraper (OfferParser offerParser) {
+    private final OfferRepository offerRepository;
+
+    public JobScraper (OfferParser offerParser, OfferRepository offerRepository) {
         this.offerParser = offerParser;
+        this.offerRepository = offerRepository;
     }
+
 
     public void run(String... args) throws Exception {
 
@@ -24,5 +28,6 @@ public class JobScraper implements CommandLineRunner {
 
         List<Offer> result = offerParser.parseAll(offers); 
 
+        offerRepository.saveAll(result);
     }
 }

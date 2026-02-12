@@ -17,7 +17,7 @@ public class OfferParser {
         return result;
     }
 
-    public Offer parseSingle(Element offer) {
+    private Offer parseSingle(Element offer) {
         Offer result = new Offer();
         result.setTitle(parseTitle(offer));
         result.setTechnologies(parseTechnologies(offer));
