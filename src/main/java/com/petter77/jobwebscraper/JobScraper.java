@@ -10,7 +10,11 @@ import org.jsoup.select.Elements;
 @Component
 public class JobScraper implements CommandLineRunner {
 
-    private OfferParser offerParser = new OfferParser();
+    private final OfferParser offerParser; 
+
+    public JobScraper (OfferParser offerParser) {
+        this.offerParser = offerParser;
+    }
 
     public void run(String... args) throws Exception {
 
