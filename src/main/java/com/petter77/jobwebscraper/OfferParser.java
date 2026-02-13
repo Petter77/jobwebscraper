@@ -4,9 +4,21 @@ import java.util.ArrayList;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
 
 @Component
 public class OfferParser {
+    @Value("${scraper.css-selector.title}")
+    private String scraperCssSelectorTitle;
+
+    @Value("${scraper.css-selector.technologies}")
+    private String scraperCssSelectorTechnologies;
+
+    @Value("${scraper.css-selector.published}")
+    private String scraperCssSelectorPublished;
+
+    @Value("${scraper.css-selector.url}")
+    private String scraperCssSelectorUrl;
 
     public List<Offer> parseAll(Elements offers) {
         List<Offer> result = new ArrayList<>();
@@ -27,11 +39,11 @@ public class OfferParser {
     }
 
     private String parseTitle(Element offer) {
-        return offer.select("h2[data-test=offer-title]").text();
+        return offer.select(scraperCssSelectorTitle).text();
     }
 
     private String parseTechnologies(Element offer) {
-        Elements technologiesList = offer.select("span[data-test=technologies-item]");
+        Elements technologiesList = offer.select(scraperCssSelectorTechnologies);
         List<String> technologies = new ArrayList<>();
         for (Element technologyTemp : technologiesList) {
             String technologyReady = technologyTemp.text();
@@ -42,11 +54,11 @@ public class OfferParser {
     }
 
     private String parsePublished(Element offer) {
-        String published = offer.select("p[data-test=text-added]").text();
+        String published = offer.select(scraperCssSelectorPublished).text();
         return published.split(": ")[2];
     }
 
     private String parseUrl(Element offer) {
-        return offer.select("a[data-test=link-offer-title]").attr("href");
+        return offer.select(scraperCssSelectorUrl).attr("href");
     }
 }

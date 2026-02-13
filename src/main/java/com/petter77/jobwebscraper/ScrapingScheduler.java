@@ -7,12 +7,18 @@ import org.jsoup.Jsoup;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.springframework.dao.DataIntegrityViolationException;
-
+import org.springframework.beans.factory.annotation.Value;
 
 @Component
 public class ScrapingScheduler {
     private final OfferParser offerParser;
     private final OfferRepository offerRepository;
+
+    @Value("${scraper.url}")
+    private String scraperUrl;
+
+    @Value("${scraper.css-selector.offer}")
+    private String scraperCssSelectorOffer;
 
     public ScrapingScheduler(OfferParser offerParser, OfferRepository offerRepository) {
         this.offerParser = offerParser;
@@ -22,7 +28,7 @@ public class ScrapingScheduler {
     @Scheduled(fixedRate = 30, timeUnit = TimeUnit.MINUTES)
     public void scrape() {
         try{
-            Document doc = Jsoup.connect("https://it.pracuj.pl/praca?et=17%2C1&sc=0&itth=38%2C54%2C41%2C37%2C36%2C34").get();
+            Document doc = Jsoup.connect(scraperUrl).get();
 
             Elements offers = doc.select(".tiles_b18pwp01.core_po9665q"); 
 
