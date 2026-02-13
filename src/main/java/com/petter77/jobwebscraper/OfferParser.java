@@ -9,16 +9,16 @@ import org.springframework.beans.factory.annotation.Value;
 @Component
 public class OfferParser {
     @Value("${scraper.css-selector.title}")
-    private String scraperCssSelectorTitle;
+    private String titleSelector;
 
     @Value("${scraper.css-selector.technologies}")
-    private String scraperCssSelectorTechnologies;
+    private String technologiesSelector;
 
     @Value("${scraper.css-selector.published}")
-    private String scraperCssSelectorPublished;
+    private String publishedSelector;
 
     @Value("${scraper.css-selector.url}")
-    private String scraperCssSelectorUrl;
+    private String urlSelector;
 
     public List<Offer> parseAll(Elements offers) {
         List<Offer> result = new ArrayList<>();
@@ -39,11 +39,11 @@ public class OfferParser {
     }
 
     private String parseTitle(Element offer) {
-        return offer.select(scraperCssSelectorTitle).text();
+        return offer.select(titleSelector).text();
     }
 
     private String parseTechnologies(Element offer) {
-        Elements technologiesList = offer.select(scraperCssSelectorTechnologies);
+        Elements technologiesList = offer.select(technologiesSelector);
         List<String> technologies = new ArrayList<>();
         for (Element technologyTemp : technologiesList) {
             String technologyReady = technologyTemp.text();
@@ -54,11 +54,11 @@ public class OfferParser {
     }
 
     private String parsePublished(Element offer) {
-        String published = offer.select(scraperCssSelectorPublished).text();
+        String published = offer.select(publishedSelector).text();
         return published.split(": ")[2];
     }
 
     private String parseUrl(Element offer) {
-        return offer.select(scraperCssSelectorUrl).attr("href");
+        return offer.select(urlSelector).attr("href");
     }
 }
