@@ -1,11 +1,14 @@
-package com.petter77.jobwebscraper;
+package com.petter77.jobwebscraper.service;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import java.util.List;
+import com.petter77.jobwebscraper.parser.JobSiteParser;
+import com.petter77.jobwebscraper.repository.OfferRepository;
+import com.petter77.jobwebscraper.model.Offer;
+
 
 @Service
 public class ScrapingService {

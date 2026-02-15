@@ -1,4 +1,4 @@
-package com.petter77.jobwebscraper;
+package com.petter77.jobwebscraper.parser;
 import java.util.List;
 import java.util.ArrayList;
 import org.jsoup.nodes.Element;
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import java.io.IOException;
-
+import com.petter77.jobwebscraper.model.Offer;
 @Component
 public class NoFluffJobsParser implements JobSiteParser{
     @Value("${scraper.url}")

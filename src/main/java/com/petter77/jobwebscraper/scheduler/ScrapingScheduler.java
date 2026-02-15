@@ -1,7 +1,8 @@
-package com.petter77.jobwebscraper;
+package com.petter77.jobwebscraper.scheduler;
 import org.springframework.stereotype.Component;
 import org.springframework.scheduling.annotation.Scheduled;
 import java.util.concurrent.TimeUnit;
+import com.petter77.jobwebscraper.service.ScrapingService;
 
 @Component
 public class ScrapingScheduler {
