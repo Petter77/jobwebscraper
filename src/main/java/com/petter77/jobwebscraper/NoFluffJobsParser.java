@@ -5,9 +5,18 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Value;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import java.io.IOException;
 
 @Component
-public class OfferParser {
+public class NoFluffJobsParser implements JobSiteParser{
+    @Value("${scraper.url}")
+    private String scraperUrl;
+
+    @Value("${scraper.css-selector.offer}")
+    private String offerSelector;
+
     @Value("${scraper.css-selector.title}")
     private String titleSelector;
 
@@ -20,7 +29,13 @@ public class OfferParser {
     @Value("${scraper.css-selector.url}")
     private String urlSelector;
 
-    public List<Offer> parseAll(Elements offers) {
+    public String getSiteName() {
+        return "NoFluffJobs.com";
+    }
+
+    public List<Offer> parse() throws IOException{
+        Document doc = Jsoup.connect(scraperUrl).get();
+        Elements offers = doc.select(offerSelector);
         List<Offer> result = new ArrayList<>();
         for (Element offer : offers) {
             result.add(parseSingle(offer));
