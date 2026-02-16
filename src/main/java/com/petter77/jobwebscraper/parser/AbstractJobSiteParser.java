@@ -10,11 +10,25 @@ import java.util.ArrayList;
 import java.io.IOException;
 
 public abstract class AbstractJobSiteParser implements JobSiteParser{
-    protected abstract String getUrl();
-    protected abstract String getOfferSelector();
-    protected abstract String getTitleSelector();
-    protected abstract String getTechnologiesSelector();
-    protected abstract String getUrlSelector();
+    private final String scraperUrl;
+    private final String offerSelector;
+    private final String titleSelector;
+    private final String technologiesSelector;
+    private final String urlSelector;
+
+    protected AbstractJobSiteParser(String scraperUrl, String offerSelector,
+            String titleSelector, String technologiesSelector, String urlSelector) {
+        this.scraperUrl = scraperUrl;
+        this.offerSelector = offerSelector;
+        this.titleSelector = titleSelector;
+        this.technologiesSelector = technologiesSelector;
+        this.urlSelector = urlSelector;
+    }
+    protected String getUrl() { return scraperUrl; }
+    protected String getOfferSelector() { return offerSelector; }
+    protected String getTitleSelector() { return titleSelector; }
+    protected String getTechnologiesSelector() { return technologiesSelector; }
+    protected String getUrlSelector() { return urlSelector; }
 
     @Override
     public List<Offer> parse() throws IOException{

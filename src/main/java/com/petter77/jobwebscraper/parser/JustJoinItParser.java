@@ -5,26 +5,16 @@ import org.jsoup.nodes.Element;
 
 @Component
 public class JustJoinItParser extends AbstractJobSiteParser { 
-    @Value("${scraper.url.justjoinit}")
-    private String scraperUrl;
 
-    @Value("${scraper.css-selector.justjoinit.offer}")
-    private String offerSelector;
+    public JustJoinItParser(
+            @Value("${scraper.url.justjoinit}") String url,
+            @Value("${scraper.css-selector.justjoinit.offer}") String offer,
+            @Value("${scraper.css-selector.justjoinit.title}") String title,
+            @Value("${scraper.css-selector.justjoinit.technologies}") String technologies,
+            @Value("${scraper.css-selector.justjoinit.url}") String urlSelector) {
+        super(url, offer, title, technologies, urlSelector);
+    }    
 
-    @Value("${scraper.css-selector.justjoinit.title}")
-    private String titleSelector;
-
-    @Value("${scraper.css-selector.justjoinit.technologies}")
-    private String technologiesSelector;
-
-    @Value("${scraper.css-selector.justjoinit.url}")
-    private String urlSelector;
-
-    protected String getUrl() { return scraperUrl; }
-    protected String getOfferSelector() { return offerSelector; }
-    protected String getTitleSelector() { return titleSelector; }
-    protected String getTechnologiesSelector() { return technologiesSelector; }
-    protected String getUrlSelector() { return urlSelector; }
 
     public String getSiteName() {
         return "justjoin.in";
@@ -33,6 +23,6 @@ public class JustJoinItParser extends AbstractJobSiteParser {
     @Override
     protected String parseUrl(Element offer) {
         String url = "https://justjoin.it";
-        return  url.concat(offer.select(urlSelector).attr("href"));
+        return  url.concat(offer.select(getUrlSelector()).attr("href"));
     }
 }
