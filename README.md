@@ -4,6 +4,8 @@ Spring Boot application that automatically scrapes IT job offers from Polish job
 
 ## Features
 
+- Scrapes multiple job boards: Pracuj.pl, NoFluffJobs, JustJoinIT
+- Extensible parser architecture — add a new site by implementing one short class
 - Automated scraping with configurable schedule (default: every 30 minutes)
 - Duplicate detection based on offer URL
 - REST API with technology-based filtering
@@ -16,6 +18,7 @@ Spring Boot application that automatically scrapes IT job offers from Polish job
 - Spring Data JPA / Hibernate
 - PostgreSQL
 - Jsoup (HTML parsing)
+- Lombok
 - SLF4J (logging)
 
 ## Getting Started
@@ -64,18 +67,60 @@ Returns all offers containing the specified technology (case-insensitive).
 
 ```
 src/main/java/com/petter77/jobwebscraper/
-├── JobwebscraperApplication.java   # Entry point, enables scheduling
-├── Offer.java                      # JPA entity
-├── OfferRepository.java            # Spring Data repository
-├── OfferParser.java                # HTML parsing logic
-├── OfferController.java            # REST API endpoints
-├── ScrapingService.java            # Scraping orchestration
-└── ScrapingScheduler.java          # Scheduled trigger
+├── JobwebscraperApplication.java           # Entry point, enables scheduling
+├── model/
+│   └── Offer.java                          # JPA entity
+├── repository/
+│   └── OfferRepository.java                # Spring Data repository
+├── parser/
+│   ├── JobSiteParser.java                  # Parser interface
+│   ├── AbstractJobSiteParser.java          # Shared parsing logic
+│   ├── PracujPlParser.java                 # Pracuj.pl implementation
+│   ├── NoFluffJobsParser.java              # NoFluffJobs implementation
+│   └── JustJoinItParser.java               # JustJoinIT implementation
+├── service/
+│   └── ScrapingService.java                # Scraping orchestration
+├── scheduler/
+│   └── ScrapingScheduler.java              # Scheduled trigger
+└── controller/
+    └── OfferController.java                # REST API endpoints
 ```
+
+## Adding a New Job Board
+
+1. Add selectors to `application.properties`:
+```properties
+scraper.url.newsite=https://...
+scraper.css-selector.newsite.offer=...
+scraper.css-selector.newsite.title=...
+scraper.css-selector.newsite.technologies=...
+scraper.css-selector.newsite.url=...
+```
+
+2. Create a parser class:
+```java
+@Component
+public class NewSiteParser extends AbstractJobSiteParser {
+
+    public NewSiteParser(
+            @Value("${scraper.url.newsite}") String url,
+            @Value("${scraper.css-selector.newsite.offer}") String offer,
+            @Value("${scraper.css-selector.newsite.title}") String title,
+            @Value("${scraper.css-selector.newsite.technologies}") String technologies,
+            @Value("${scraper.css-selector.newsite.url}") String urlSelector) {
+        super(url, offer, title, technologies, urlSelector);
+    }
+
+    public String getSiteName() { return "newsite.com"; }
+}
+```
+
+No other code changes required — Spring auto-discovers the new parser.
 
 ## Roadmap
 
-- [ ] Support for multiple job boards (interface-based parser architecture)
+- [x] Support for multiple job boards
+- [x] Interface-based parser architecture
 - [ ] Pagination and sorting on API endpoints
 - [ ] Global error handling with `@ControllerAdvice`
 - [ ] Swagger/OpenAPI documentation
