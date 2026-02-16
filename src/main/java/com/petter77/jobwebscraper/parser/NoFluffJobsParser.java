@@ -1,16 +1,10 @@
 package com.petter77.jobwebscraper.parser;
-import java.util.List;
-import java.util.ArrayList;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Value;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import java.io.IOException;
-import com.petter77.jobwebscraper.model.Offer;
+import org.jsoup.nodes.Element;
+
 @Component
-public class NoFluffJobsParser implements JobSiteParser{
+public class NoFluffJobsParser extends AbstractJobSiteParser { 
     @Value("${scraper.url.nofluffjobs}")
     private String scraperUrl;
 
@@ -29,54 +23,20 @@ public class NoFluffJobsParser implements JobSiteParser{
     @Value("${scraper.css-selector.nofluffjobs.url}")
     private String urlSelector;
 
+    protected String getUrl() { return scraperUrl; }
+    protected String getOfferSelector() { return offerSelector; }
+    protected String getTitleSelector() { return titleSelector; }
+    protected String getPublishedSelector() { return publishedSelector; }
+    protected String getTechnologiesSelector() { return technologiesSelector; }
+    protected String getUrlSelector() { return urlSelector; }
+
     public String getSiteName() {
         return "NoFluffJobs.com";
     }
 
-    public List<Offer> parse() throws IOException{
-        Document doc = Jsoup.connect(scraperUrl).get();
-        Elements offers = doc.select(offerSelector);
-        List<Offer> result = new ArrayList<>();
-        for (Element offer : offers) {
-            result.add(parseSingle(offer));
-        }
-
-        return result;
-    }
-
-    private Offer parseSingle(Element offer) {
-        Offer result = new Offer();
-        result.setTitle(parseTitle(offer));
-        result.setTechnologies(parseTechnologies(offer));
-        result.setPublished(parsePublished(offer));
-        result.setUrl(parseUrl(offer));
-        return result;
-    }
-
-    private String parseTitle(Element offer) {
-        return offer.select(titleSelector).text();
-    }
-
-    private String parseTechnologies(Element offer) {
-        Elements technologiesList = offer.select(technologiesSelector);
-        List<String> technologies = new ArrayList<>();
-        for (Element technologyTemp : technologiesList) {
-            String technologyReady = technologyTemp.text();
-            technologies.add(technologyReady);
-        }
-
-        return String.join(", ", technologies);
-    }
-
-    private String parsePublished(Element offer) {
-//        String published = offer.select(publishedSelector).text();
-//        return published.split(": ")[2];
-        return "";
-    }
-
-    private String parseUrl(Element offer) {
+    @Override
+    protected String parseUrl(Element offer) {
         String url = "nofluffjobs.com";
         return  url.concat(offer.select(urlSelector).attr("href"));
-
     }
 }
