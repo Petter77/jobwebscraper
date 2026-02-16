@@ -11,22 +11,22 @@ import java.io.IOException;
 import com.petter77.jobwebscraper.model.Offer;
 @Component
 public class NoFluffJobsParser implements JobSiteParser{
-    @Value("${scraper.url}")
+    @Value("${scraper.url.nofluffjobs}")
     private String scraperUrl;
 
-    @Value("${scraper.css-selector.offer}")
+    @Value("${scraper.css-selector.nofluffjobs.offer}")
     private String offerSelector;
 
-    @Value("${scraper.css-selector.title}")
+    @Value("${scraper.css-selector.nofluffjobs.title}")
     private String titleSelector;
 
-    @Value("${scraper.css-selector.technologies}")
+    @Value("${scraper.css-selector.nofluffjobs.technologies}")
     private String technologiesSelector;
 
-    @Value("${scraper.css-selector.published}")
+    @Value("${scraper.css-selector.nofluffjobs.published}")
     private String publishedSelector;
 
-    @Value("${scraper.css-selector.url}")
+    @Value("${scraper.css-selector.nofluffjobs.url}")
     private String urlSelector;
 
     public String getSiteName() {
@@ -69,11 +69,14 @@ public class NoFluffJobsParser implements JobSiteParser{
     }
 
     private String parsePublished(Element offer) {
-        String published = offer.select(publishedSelector).text();
-        return published.split(": ")[2];
+//        String published = offer.select(publishedSelector).text();
+//        return published.split(": ")[2];
+        return "";
     }
 
     private String parseUrl(Element offer) {
-        return offer.select(urlSelector).attr("href");
+        String url = "nofluffjobs.com";
+        return  url.concat(offer.select(urlSelector).attr("href"));
+
     }
 }

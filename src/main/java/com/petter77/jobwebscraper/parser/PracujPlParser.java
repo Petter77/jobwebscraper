@@ -12,22 +12,22 @@ import com.petter77.jobwebscraper.model.Offer;
 
 @Component
 public class PracujPlParser implements JobSiteParser{
-    @Value("${scraper.url}")
+    @Value("${scraper.url.pracujpl}")
     private String scraperUrl;
 
-    @Value("${scraper.css-selector.offer}")
+    @Value("${scraper.css-selector.pracujpl.offer}")
     private String offerSelector;
 
-    @Value("${scraper.css-selector.title}")
+    @Value("${scraper.css-selector.pracujpl.title}")
     private String titleSelector;
 
-    @Value("${scraper.css-selector.technologies}")
+    @Value("${scraper.css-selector.pracujpl.technologies}")
     private String technologiesSelector;
 
-    @Value("${scraper.css-selector.published}")
+    @Value("${scraper.css-selector.pracujpl.published}")
     private String publishedSelector;
 
-    @Value("${scraper.css-selector.url}")
+    @Value("${scraper.css-selector.pracujpl.url}")
     private String urlSelector;
 
     public String getSiteName() {
