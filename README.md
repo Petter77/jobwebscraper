@@ -5,11 +5,11 @@ Spring Boot application that automatically scrapes IT job offers from Polish job
 ## Features
 
 - Scrapes multiple job boards: Pracuj.pl, NoFluffJobs, JustJoinIT
-- Extensible parser architecture — add a new site by implementing one short class
+- Extensible parser architecture - add a new site by implementing one short class
 - Automated scraping with configurable schedule (default: every 30 minutes)
 - Duplicate detection based on offer URL
 - REST API with technology-based filtering
-- Externalized CSS selectors — adapts to site changes without code modifications
+- Externalized CSS selectors - adapts to site changes without code modifications
 
 ## Tech Stack
 
@@ -115,7 +115,7 @@ public class NewSiteParser extends AbstractJobSiteParser {
 }
 ```
 
-No other code changes required — Spring auto-discovers the new parser.
+No other code changes required - Spring auto-discovers the new parser.
 
 ## Roadmap
 
