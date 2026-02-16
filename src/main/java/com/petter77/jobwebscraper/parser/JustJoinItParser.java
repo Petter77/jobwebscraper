@@ -32,7 +32,7 @@ public class JustJoinItParser extends AbstractJobSiteParser {
 
     @Override
     protected String parseUrl(Element offer) {
-        String url = "justjoin.it";
+        String url = "https://justjoin.it";
         return  url.concat(offer.select(urlSelector).attr("href"));
     }
 }

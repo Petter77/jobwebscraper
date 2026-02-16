@@ -32,7 +32,7 @@ public class NoFluffJobsParser extends AbstractJobSiteParser {
 
     @Override
     protected String parseUrl(Element offer) {
-        String url = "nofluffjobs.com";
+        String url = "https://nofluffjobs.com";
         return  url.concat(offer.select(urlSelector).attr("href"));
     }
 }
