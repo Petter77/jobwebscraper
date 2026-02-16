@@ -4,8 +4,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
+import lombok.Data;
 
-
+@Data
 @Entity
 public class Offer {
     @Id
@@ -29,28 +30,5 @@ public class Offer {
         this.url = url;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getTechnologies() {
-        return technologies;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setTechnologies(String technologies) {
-        this.technologies = technologies;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
 }
 
