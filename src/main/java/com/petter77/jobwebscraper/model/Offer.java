@@ -16,9 +16,6 @@ public class Offer {
     private String title;
 
     @Column(nullable = false)
-    private String published;
-
-    @Column(nullable = false)
     private String technologies;
 
     @Column(nullable = false, unique = true)
@@ -26,10 +23,9 @@ public class Offer {
 
     public Offer(){}
 
-    public Offer(String title, String technologies, String published, String url) {
+    public Offer(String title, String technologies, String url) {
         this.title = title;
         this.technologies = technologies;
-        this.published = published;
         this.url = url;
     }
 
@@ -39,10 +35,6 @@ public class Offer {
 
     public String getTechnologies() {
         return technologies;
-    }
-
-    public String getPublished() {
-        return published;
     }
 
     public String getUrl() {
@@ -55,10 +47,6 @@ public class Offer {
 
     public void setTechnologies(String technologies) {
         this.technologies = technologies;
-    }
-
-    public void setPublished(String published) {
-        this.published = published;
     }
 
     public void setUrl(String url) {

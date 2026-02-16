@@ -17,16 +17,12 @@ public class NoFluffJobsParser extends AbstractJobSiteParser {
     @Value("${scraper.css-selector.nofluffjobs.technologies}")
     private String technologiesSelector;
 
-    @Value("${scraper.css-selector.nofluffjobs.published}")
-    private String publishedSelector;
-
     @Value("${scraper.css-selector.nofluffjobs.url}")
     private String urlSelector;
 
     protected String getUrl() { return scraperUrl; }
     protected String getOfferSelector() { return offerSelector; }
     protected String getTitleSelector() { return titleSelector; }
-    protected String getPublishedSelector() { return publishedSelector; }
     protected String getTechnologiesSelector() { return technologiesSelector; }
     protected String getUrlSelector() { return urlSelector; }
 

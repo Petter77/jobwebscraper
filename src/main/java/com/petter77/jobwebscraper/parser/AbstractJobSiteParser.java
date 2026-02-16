@@ -13,7 +13,6 @@ public abstract class AbstractJobSiteParser implements JobSiteParser{
     protected abstract String getUrl();
     protected abstract String getOfferSelector();
     protected abstract String getTitleSelector();
-    protected abstract String getPublishedSelector();
     protected abstract String getTechnologiesSelector();
     protected abstract String getUrlSelector();
 
@@ -33,7 +32,6 @@ public abstract class AbstractJobSiteParser implements JobSiteParser{
         Offer result = new Offer();
         result.setTitle(parseTitle(offer));
         result.setTechnologies(parseTechnologies(offer));
-        result.setPublished(parsePublished(offer));
         result.setUrl(parseUrl(offer));
         return result;
     }
@@ -51,12 +49,6 @@ public abstract class AbstractJobSiteParser implements JobSiteParser{
         }
 
         return String.join(", ", technologies);
-    }
-
-    protected String parsePublished(Element offer) {
-//        String published = offer.select(publishedSelector).text();
-//        return published.split(": ")[2];
-        return "";
     }
 
     protected String parseUrl(Element offer) {
