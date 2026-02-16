@@ -17,7 +17,7 @@ public class JustJoinItParser extends AbstractJobSiteParser {
 
 
     public String getSiteName() {
-        return "justjoin.in";
+        return "justjoin.it";
     }
 
     @Override
