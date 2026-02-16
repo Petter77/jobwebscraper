@@ -13,7 +13,7 @@ import com.petter77.jobwebscraper.model.Offer;
 public class OfferController {
     private final OfferRepository offerRepository;
 
-    OfferController(OfferRepository offerRepository) {
+    public OfferController(OfferRepository offerRepository) {
         this.offerRepository = offerRepository;
     }
 

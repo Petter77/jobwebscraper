@@ -19,24 +19,25 @@ public class ScrapingService {
     private final OfferRepository offerRepository;
 
     public ScrapingService(List<JobSiteParser> parsers, OfferRepository offerRepository) {
-        this.parsers= parsers;
+        this.parsers = parsers;
         this.offerRepository = offerRepository;
     }
 
     public void scrapeAndSave() {
         for (JobSiteParser parser : parsers) {
+            int scrapedCounter = 0;
             try {
                 List<Offer> parsed = parser.parse();
-
                 for (Offer offer : parsed) {
                     try {
                         offerRepository.save(offer);
+                        scrapedCounter++;
                     } catch (DataIntegrityViolationException e) {
                         log.debug("Duplicate offer: {}", offer.getUrl());
                     }
                 }
 
-                log.info("Scraped {} offers", parsed.size());
+                log.info("Scraped {} offers from {}", scrapedCounter, parser.getSiteName());
             } catch (Exception e) {
                 log.error("Scraping failed", e);
             }

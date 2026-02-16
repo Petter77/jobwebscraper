@@ -24,7 +24,7 @@ public class Offer {
     @Column(nullable = false, unique = true)
     private String url;
 
-    public Offer(){};
+    public Offer(){}
 
     public Offer(String title, String technologies, String published, String url) {
         this.title = title;
