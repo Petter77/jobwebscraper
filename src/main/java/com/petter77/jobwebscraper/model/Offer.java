@@ -19,7 +19,7 @@ public class Offer {
     @Column(nullable = false)
     private String technologies;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String url;
 
     public Offer(){}
