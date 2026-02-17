@@ -7,5 +7,5 @@ import org.springframework.data.domain.Pageable;
 
 @Repository
 public interface OfferRepository extends JpaRepository<Offer, Long> {
-    Page<Offer> findByTechnologiesContainingIgnoreCase(String technology, Pageable pageable);
+    Page<Offer> findByTechnologiesContainingIgnoreCase(Pageable pageable, String technology);
 }
