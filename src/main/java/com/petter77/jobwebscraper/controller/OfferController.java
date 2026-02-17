@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 import com.petter77.jobwebscraper.repository.OfferRepository;
 import com.petter77.jobwebscraper.model.Offer;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequestMapping("/api/offers")
@@ -18,13 +19,13 @@ public class OfferController {
     }
 
     @GetMapping
-    public List<Offer> getAll() {
-        return offerRepository.findAll();
+    public Page<Offer> getAll(Pageable pageable) {
+        return offerRepository.findAll(pageable);
     }
 
     @GetMapping("/search")
-    public List<Offer> searchByTechnology(@RequestParam String technology) {
-        return  offerRepository.findByTechnologiesContainingIgnoreCase(technology);
+    public Page<Offer> searchByTechnology(@RequestParam String technology, Pageable pageable) {
+        return  offerRepository.findByTechnologiesContainingIgnoreCase(pageable, technology);
     }
 
 
